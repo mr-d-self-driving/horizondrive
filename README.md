@@ -126,37 +126,27 @@ Run the default single-GPU evaluation:
 ```bash
 bash run_eval.sh
 ```
-
-By default, `run_eval.sh` uses GPU `5`. Override it with:
-
-```bash
-CUDA_VISIBLE_DEVICES=0 bash run_eval.sh
-```
-
-For multi-process evaluation:
+Or run multi-process evaluation:
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1 NUM_PROCESSES=2 bash horizondrive/shell/eval.sh
+CUDA_VISIBLE_DEVICES=0,1,2,3 NUM_PROCESSES=4 bash run_eval.sh
 ```
 
 Useful output locations:
 
 ```text
 logs/test/validation_res_final/<validation_mode>/
-├── *_comparison.mp4
-├── *_gt.mp4
-├── *_metrics.json
+├── <clip>.mp4
+├── <clip>_bbox.mp4
+├── <clip>_comparison.mp4
+├── <clip>_hdmap.mp4
+├── <clip>_gt.mp4
+├── <clip>_metrics.json
 ├── fid_scores.txt
 └── fvd_scores.txt
 ```
 
-FID and FVD are computed over the full validation set. FVD first splits each
-validation video into non-overlapping 16-frame segments, then computes one
-Frechet distance over all generated and ground-truth segment features. The I3D
-TorchScript weight is loaded from `models/fvd/styleganv/i3d_torchscript.pt`.
-
-Some nuScenes samples contain inaccurate control signals; model performance may
-degrade on those samples.
+> Note: Some nuScenes samples contain inaccurate control signals; model performance may degrade on those samples.
 
 
 ## 📚 Citation
